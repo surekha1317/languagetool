@@ -27,6 +27,9 @@ import java.util.ResourceBundle;
 import org.languagetool.Language;
 import org.languagetool.UserConfig;
 
+import org.languagetool.rules.spelling.morfologik.MorfologikMultiSpeller;
+import org.languagetool.rules.spelling.morfologik.MorfologikSpellerRule;
+
 public final class MorfologikAmericanSpellerRule extends AbstractEnglishSpellerRule {
 
   public static final String RULE_ID = "MORFOLOGIK_RULE_EN_US";
@@ -55,6 +58,16 @@ public final class MorfologikAmericanSpellerRule extends AbstractEnglishSpellerR
     return RULE_ID;
   }
 
+   @Override
+  protected boolean isMisspelled(MorfologikMultiSpeller speller, String word) {
+  
+      if (!speller.isMisspelled(word.toLowerCase(conversionLocale))) {
+     return false;
+      }
+
+    return super.isMisspelled(speller, word);
+  }
+  
   @Override
   public String getLanguageVariantSpellingFileName() {
     return LANGUAGE_SPECIFIC_PLAIN_TEXT_DICT;
